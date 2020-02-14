@@ -4,5 +4,6 @@
 application-oauth.properties
 application-real-db.properties
 out
-build/tmp/
+*.log
+build
 src/test/resources/
