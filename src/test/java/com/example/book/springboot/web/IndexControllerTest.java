@@ -17,8 +17,10 @@ public class IndexControllerTest {
 
     @Test
     public void 메인페이지_로딩(){
+        //when
         String body = this.restTemplate.getForObject("/",String.class);
 
-        Assertions.assertThat(body).contains("스프링 부트 웹 서비스");
+        //then
+        Assertions.assertThat(body).contains("스프링 부트");
     }
 }
