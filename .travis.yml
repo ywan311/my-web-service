@@ -32,8 +32,19 @@ deploy:
     acl: private
     local_dir: deploy
     wait-until-deployed: true
+  - provider: codedeploy
+    access_key_id: $AWS_ACCESS_KEY
+    secret_access_key: $AWS_SECRET_KEY
+    bucket: spring-webservice-build-file
+    key: web-service.zip
+    bundle_type: zip
+    application: spring-webservice-example
+    deployment_group: spring-webservice-example-group
+    region: ap-northeast-2
+    wait-until-deployed: true
+
 
 notifications:
   email:
     recipients:
-      - "ywan311@naver.com"
+      - ywan311@naver.com
