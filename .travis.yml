@@ -11,6 +11,10 @@ cache:
     - '$home/.m2/repository'
     - '$home/.gradle'
 
+#트래비스 실행시 파일 실행 권한이 없음
+before_install:
+  - chomod +x gradlew
+
 script: "./gradlew clean build"
 notifications:
   email:
