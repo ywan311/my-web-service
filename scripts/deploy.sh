@@ -1,29 +1,15 @@
 #!/bin/bash
 
-REPOSITORY=/home/ec2-user/app/step1
-PROJECT_NAME=my-web-service
+REPOSITORY=/home/ec2-user/app/step2
+PROJECT_NAME=web-service
 
-cd $REPOSITORY/$PROJECT_NAME/
+echo "> build 파일 복사"
 
-echo "> Git Pull"
+cp $REPOSITORY/zip/*.jar $REPOSITORY/
 
-git pull
+echo "> 현재 구동중인 애플리케이션 pid 확인 "
 
-echo "> 프로젝트 build 시작"
-
-./gradlew build
-
-echo ">step1 디렉토리로 이동"
-
-cd $REPOSITORY
-
-echo "> Build 복사"
-
-cp $REPOSITORY/$PROJECT_NAME/build/libs/*.jar $REPOSITORY/
-
-echo "> 현재 구동중인 애플리케이션 pid 확인 프로젝트 //이름*.jar 파일에서 version,snapshot을 포함한 프로세스를 찾고 번호를 변수에 저장"
-
-CURRENT_PID=$(pgrep -f web-service*.jar)
+CURRENT_PID=$(pgrep -fl web-service |grep jar | awk '{print $1}')
 
 echo "현재 구동중인 어플리케이션 pid: $CURRENT_PID"
 
@@ -39,6 +25,9 @@ echo "> 새 애플리케이션 배포"
 JAR_NAME=$(ls -tr $REPOSITORY/ | grep *jar | tail -n 1)
 
 echo "> JAR_Name: $JAR_NAME"
+
+echo ">$JAR_NAME 실행권한 추가"
+chmod +x $JAR_NAME
 
 nohup java -jar \
     -Dspring.config.location=classpath:/application.properties,classpath:/application-real.properties,/home/ec2-user/app/application-oauth.properties,/home/ec2-user/app/application-real-db.properties \
