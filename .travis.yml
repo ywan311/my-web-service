@@ -16,7 +16,24 @@ before_install:
   - chmod +x gradlew
 
 script: "./gradlew clean build"
+
+before_deploy:
+  - zip -r web-service *
+  - mkdir -p deploy
+  - mv web-service.zip deploy/web-service.zip
+
+deploy:
+  - provider: s3
+    access_key_id: $AWS_ACCESS_KEY
+    secret_access_key: $AWS_SECRET_KEY
+    bucket: spring-webservice-build-file
+    region: ap-northeast-2
+    skip_cleanup: true
+    acl: private
+    local_dir: deploy
+    wait-until-deployed: true
+
 notifications:
   email:
     recipients:
-      -ywan311@naver.com
+      - "ywan311@naver.com"
