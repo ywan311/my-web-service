@@ -44,7 +44,7 @@ public class PostsRepositoryTest {
 
     @Test
     public void baseTime_등록(){
-        LocalDateTime now = LocalDateTime.now();
+        LocalDateTime now = LocalDateTime.of(2020,2,19,0,0,0);
         postsRepository.save(Posts.builder()
         .title("title")
         .content("content")
@@ -57,7 +57,7 @@ public class PostsRepositoryTest {
 
         System.out.println(">>>>>>>>>>>>>>>>>>>>>>>> createDate:"+posts.getCreatedDate()+"  modifiedDate:"+posts.getModifiedDate());
 
-        assertThat(posts.getCreatedDate()).isAfter(now);
-        assertThat(posts.getModifiedDate()).isAfter(now);
+        assertThat(posts.getCreatedDate()).isAfterOrEqualTo(now);
+        assertThat(posts.getModifiedDate()).isAfterOrEqualTo(now);
     }
 }
