@@ -26,7 +26,7 @@ JAR_NAME=$(ls -tr $REPOSITORY/*.jar | tail -n 1)
 
 echo "> JAR_Name: $JAR_NAME"
 
-echo ">$JAR_NAME 실행권한 추가"
+echo ">$JAR_NAME 실행권한 추가 관리자 권한이 없을 시에 실행 x"
 sudo chmod +x $JAR_NAME
 
 nohup java -jar \
